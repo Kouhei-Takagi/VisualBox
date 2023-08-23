@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>タイトルの設定と削除</title>
+    <style>
+        .box {
+          position: relative;
+          width: 300px;
+          height: 250px;
+          border: 3px solid black;
+          padding: 20px;
+          box-sizing: border-box;
+          margin-top: 40px;
+        }
+
+        .title-container {
+          position: absolute;
+          top: -20px;
+          left: 20px;
+          background-color: white;
+          display: flex;
+          align-items: center;
+        }
+
+        #titleInput, #boxTitleInput {
+          padding: 5px 10px;
+          margin-right: 5px;
+        }
+
+        button {
+          padding: 5px 10px;
+          margin: 0 5px;  /* 左右に少しマージンを追加 */
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <div class="title-container">
+        <input type="text" id="boxTitleInput" value="デフォルトタイトル">
+        <button onclick="setBoxTitle()">設定</button>
+        <button onclick="deleteBoxTitle()">削除</button>
+    </div>
+    <input type="text" id="titleInput" placeholder="テキストを追加">
+    <button onclick="setTitle()">設定</button>
+    <!-- その他のコンテンツ -->
+</div>
+
+<script>
+    function setBoxTitle() {
+        var inputTitle = document.getElementById('boxTitleInput').value;
+        if(inputTitle) {
+            document.getElementById('boxTitleInput').value = inputTitle;
+        }
+    }
+
+    function deleteBoxTitle() {
+        document.getElementById('boxTitleInput').value = '';
+    }
+
+    function setTitle() {
+        var inputTitle = document.getElementById('titleInput').value;
+        if(inputTitle) {
+            var div = document.createElement('div');
+            div.innerText = inputTitle;
+            document.querySelector('.box').appendChild(div);
+            document.getElementById('titleInput').value = '';
+        }
+    }
+</script>
+
+</body>
+</html>

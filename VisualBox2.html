@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisualBox</title>
+    <style>
+        .box {
+          position: relative;
+          width: 300px;
+          height: 200px;
+          border: 3px solid black;
+          padding: 20px;
+          box-sizing: border-box;
+          margin-top: 40px; /* 上部に少しスペースを追加 */
+        }
+
+        .title {
+          position: absolute;
+          top: -15px;
+          left: 20px;
+          background-color: white;
+          padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+
+<input type="text" id="titleInput" placeholder="タイトルを入力してください">
+<button onclick="setTitle()">タイトルを設定</button>
+
+<div class="box">
+    <div class="title" id="boxTitle">デフォルトタイトル</div>
+    <!-- その他のコンテンツ -->
+</div>
+
+<script>
+    function setTitle() {
+        var inputTitle = document.getElementById('titleInput').value;
+        document.getElementById('boxTitle').innerText = inputTitle;
+    }
+</script>
+
+</body>
+</html>

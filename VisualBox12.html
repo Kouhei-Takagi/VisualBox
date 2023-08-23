@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>サブボックス追加</title>
+    <style>
+        .box {
+            position: relative;
+            width: 300px;
+            border: 3px solid black;
+            padding: 20px;
+            box-sizing: border-box;
+            margin-top: 20px;
+            min-height: 400px;
+        }
+
+        .sub-box {
+            width: 100%;
+            border: 1px solid grey;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-top: 20px;
+        }
+
+        /* サブボックス内の要素のスタイルも調整が必要です */
+        .sub-box input[type="text"] {
+            width: calc(100% - 140px); /* ボタンの幅とマージンを引いた値 */
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="box" id="mainBox">
+        <button onclick="addSubBox()">サブボックスを追加</button>
+    </div>
+
+    <script>
+        function addSubBox() {
+            const mainBox = document.getElementById('mainBox');
+            const subBox = document.createElement('div');
+            subBox.className = 'sub-box';
+            subBox.innerHTML = `
+                <input type="text" placeholder="テキストを入力">
+                <button>設定</button>
+            `;
+            mainBox.appendChild(subBox);
+        }
+    </script>
+</body>
+</html>

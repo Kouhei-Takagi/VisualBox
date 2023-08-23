@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>テキストの設定と削除</title>
+    <style>
+        .box {
+          position: relative;
+          width: 300px;
+          height: 300px;
+          border: 3px solid black;
+          padding: 20px;
+          box-sizing: border-box;
+          margin-top: 40px;
+        }
+
+        .title-container, .text-container {
+          position: absolute;
+          top: -20px;
+          left: 20px;
+          background-color: white;
+          display: flex;
+          align-items: center;
+        }
+
+        .text-container {
+          top: auto;
+          bottom: -45px; /* タイトル入力フィールドの位置を調整 */
+        }
+
+        #titleInput, #boxTitleInput, #textInput {
+          padding: 5px 10px;
+          margin-right: 5px;
+        }
+
+        button {
+          padding: 5px 10px;
+          margin: 0 5px;
+        }
+
+        #content {
+          margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <div class="title-container">
+        <input type="text" id="boxTitleInput" value="デフォルトタイトル">
+        <button onclick="setBoxTitle()">設定</button>
+        <button onclick="deleteBoxTitle()">削除</button>
+    </div>
+    <div id="content"></div>
+    <div class="text-container">
+        <input type="text" id="textInput" placeholder="テキストを追加">
+        <button onclick="setText()">設定</button>
+        <button onclick="deleteText()">削除</button>
+    </div>
+</div>
+
+<script>
+    function setBoxTitle() {
+        var inputTitle = document.getElementById('boxTitleInput').value;
+        if(inputTitle) {
+            document.getElementById('boxTitleInput').value = inputTitle;
+        }
+    }
+
+    function deleteBoxTitle() {
+        document.getElementById('boxTitleInput').value = '';
+    }
+
+    function setText() {
+        var inputText = document.getElementById('textInput').value;
+        if(inputText) {
+            var div = document.createElement('div');
+            div.id = "lastAddedText";
+            div.innerText = inputText;
+            document.getElementById('content').appendChild(div);
+            document.getElementById('textInput').value = '';
+        }
+    }
+
+    function deleteText() {
+        var lastAddedText = document.getElementById('lastAddedText');
+        if (lastAddedText) {
+            lastAddedText.remove();
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>テキストの設定と追加</title>
+    <style>
+        .box,
+        .sub-box {
+            position: relative;
+            width: 100%;
+            border: 3px solid black;
+            padding: 20px;
+            box-sizing: border-box;
+            margin-top: 20px;
+        }
+
+        .box {
+            max-width: 600px;  /* 親ボックスの幅を変更 */
+            min-height: 400px;
+        }
+
+        .title-container {
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+        }
+
+        #titleInput, #boxTitleInput, #textInput {
+            padding: 5px 10px;
+            margin-right: 5px;
+            width: 100%;  /* テキストフィールドの幅を最大にする */
+            box-sizing: border-box; /* padding と border が width に影響を与えないようにする */
+        }
+
+        #textInput {
+            height: auto; /* height の固定値を削除 */
+            resize: none; /* テキストフィールドのサイズ変更を無効にする */
+        }
+
+        button {
+            padding: 5px 10px;
+            margin: 0 5px;
+        }
+
+        .input-area {
+            display: flex;
+            flex-direction: column;  /* 縦並びに変更 */
+            align-items: stretch;  /* インプットフィールドを親の幅に合わせる */
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <div class="title-container">
+        <input type="text" id="boxTitleInput" value="デフォルトタイトル">
+    </div>
+    <div id="content"></div>
+    <div class="input-area">
+        <textarea id="textInput" rows="5" placeholder="テキストを追加"></textarea>
+    </div>
+    <button onclick="addSubBox(this.parentElement)">サブボックスを追加</button>
+    <button onclick="addSiblingBox(this.parentElement)">同じ段階のボックスを追加</button>
+</div>
+
+<script>
+    const MAX_DEPTH = 5;
+    const MAX_SUBBOXES_PER_PARENT = 5;
+
+    function addSubBox(parentBox) {
+        let depth = getBoxDepth(parentBox);
+        let childBoxes = parentBox.querySelectorAll(':scope > .sub-box').length;
+
+        if (depth < MAX_DEPTH && childBoxes < MAX_SUBBOXES_PER_PARENT) {
+            let subBox = document.createElement('div');
+            subBox.className = 'sub-box';
+            subBox.innerHTML = `
+                <textarea placeholder="サブボックスのテキスト" rows="5"></textarea>
+                <button onclick="addSubBox(this.parentElement)">サブボックスを追加</button>
+                <button onclick="addSiblingBox(this.parentElement)">同じ段階のボックスを追加</button>
+            `;
+            parentBox.appendChild(subBox);
+            adjustMainBoxHeight();
+        }
+    }
+
+    function addSiblingBox(currentBox) {
+        let parentBox = currentBox.parentElement;
+        addSubBox(parentBox);
+    }
+
+    function getBoxDepth(element) {
+        let depth = 0;
+        while (element && element.className.includes('box')) {
+            depth++;
+            element = element.parentElement;
+        }
+        return depth;
+    }
+
+    function adjustMainBoxHeight() {
+        const mainBox = document.querySelector('.box');
+        mainBox.style.height = 'auto';
+    }
+
+</script>
+
+</body>
+</html>

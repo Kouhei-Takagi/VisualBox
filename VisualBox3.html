@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>四角い枠にタイトルを重ねる</title>
+    <style>
+        .box {
+          position: relative;
+          width: 300px;
+          height: 200px;
+          border: 3px solid black;
+          padding: 20px;
+          box-sizing: border-box;
+          margin-top: 40px; /* 上部に少しスペースを追加 */
+        }
+
+        .title-container {
+          position: absolute;
+          top: -15px;
+          left: 20px;
+          background-color: white;
+          display: flex;
+          align-items: center;
+        }
+
+        .title {
+          padding: 5px 10px;
+          margin-right: 5px;
+        }
+
+        button {
+          padding: 5px 10px;
+        }
+
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <div class="title-container">
+        <input type="text" id="titleInput" placeholder="タイトルを入力">
+        <button onclick="setTitle()">設定</button>
+    </div>
+    <!-- その他のコンテンツ -->
+</div>
+
+<script>
+    function setTitle() {
+        var inputTitle = document.getElementById('titleInput').value;
+        if(inputTitle) {
+            document.getElementById('titleInput').placeholder = inputTitle;
+            document.getElementById('titleInput').value = '';
+        }
+    }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>テキストの設定と追加</title>
+    <style>
+        .box,
+        .sub-box {
+            position: relative;
+            width: 300px;
+            border: 3px solid black;
+            padding: 20px;
+            box-sizing: border-box;
+            margin-top: 20px;
+        }
+
+        .box {
+            min-height: 400px;
+        }
+
+        .title-container {
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+        }
+
+        #titleInput, #boxTitleInput, #textInput {
+            padding: 5px 10px;
+            margin-right: 5px;
+        }
+
+        button {
+            padding: 5px 10px;
+            margin: 0 5px;
+        }
+
+        .input-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <div class="title-container">
+        <input type="text" id="boxTitleInput" value="デフォルトタイトル">
+        <button id="setTitleButton" onclick="setBoxTitle()">設定</button>
+        <button onclick="deleteBoxTitle()">削除</button>
+    </div>
+    <div id="content"></div>
+    <div class="input-area">
+        <input type="text" id="textInput" placeholder="テキストを追加">
+        <button onclick="setText()">設定</button>
+    </div>
+    <button id="addSubBoxBtn" onclick="addSubBox(this.parentElement)">サブボックスを追加</button>
+</div>
+
+<script>
+    const MAX_DEPTH = 5;
+
+    function addSubBox(parentBox) {
+        let depth = getBoxDepth(parentBox);
+        if (depth < MAX_DEPTH) {
+            let subBox = document.createElement('div');
+            subBox.className = 'sub-box';
+            subBox.innerHTML = `
+                <input type="text" placeholder="サブボックスのテキスト">
+                <button>設定</button>
+                <button onclick="addSubBox(this.parentElement)">サブボックスを追加</button>
+            `;
+            parentBox.appendChild(subBox);
+            adjustMainBoxHeight();
+        }
+    }
+
+    function getBoxDepth(element) {
+        let depth = 0;
+        while (element && element.className.includes('box')) {
+            depth++;
+            element = element.parentElement;
+        }
+        return depth;
+    }
+
+    function adjustMainBoxHeight() {
+        const mainBox = document.querySelector('.box');
+        mainBox.style.height = 'auto';
+    }
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>テキストの設定と追加</title>
+    <style>
+        .box {
+            position: relative;
+            width: 600px;
+            border: 3px solid black;
+            padding: 20px;
+            box-sizing: border-box;
+            margin-top: 20px;
+        }
+
+        .sub-box {
+            border: 3px solid black;
+            padding: 20px;
+            box-sizing: border-box;
+            margin-top: 20px;
+            width: calc(100% - 46px);  /* ボーダーとパディングの分を引いた幅 */
+        }
+
+        .title-container {
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            background-color: white;
+            display: flex;
+            align-items: center;
+        }
+
+        #titleInput, #boxTitleInput {
+            padding: 5px 10px;
+            margin-right: 5px;
+            width: 100%;
+            display: block;
+            box-sizing: border-box;
+        }
+
+        textarea {
+            width: 100%;
+            height: 5em;
+            resize: vertical;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 5px 10px;
+            margin: 0 5px;
+        }
+
+        .input-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <div class="title-container">
+        <input type="text" id="boxTitleInput" value="デフォルトタイトル">
+        <button id="setTitleButton" onclick="setBoxTitle()">設定</button>
+        <button onclick="deleteBoxTitle()">削除</button>
+    </div>
+    <div id="content"></div>
+    <div class="input-area">
+        <textarea id="textInput" placeholder="テキストを追加"></textarea>
+    </div>
+    <button id="addSubBoxBtn" onclick="addSubBox(this.parentElement)">サブボックスを追加</button>
+</div>
+
+<script>
+    const MAX_DEPTH = 5;
+
+    function addSubBox(parentBox) {
+        let depth = getBoxDepth(parentBox);
+        if (depth < MAX_DEPTH) {
+            let subBox = document.createElement('div');
+            subBox.className = 'sub-box';
+            subBox.innerHTML = `
+                <textarea placeholder="サブボックスのテキスト"></textarea>
+                <button onclick="addSubBox(this.parentElement)">サブボックスを追加</button>
+            `;
+            parentBox.appendChild(subBox);
+        }
+    }
+
+    function getBoxDepth(element) {
+        let depth = 0;
+        while (element && element.className.includes('box')) {
+            depth++;
+            element = element.parentElement;
+        }
+        return depth;
+    }
+</script>
+
+</body>
+</html>
